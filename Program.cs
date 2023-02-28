@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 enum Day
 {
@@ -25,12 +25,9 @@ public class Program
 
     public static void Main()
     {
+        string result = "";
         Console.Write("Введите день недели: ");
         string day = Console.ReadLine();
-
-        Console.Write("Введите время в часах: ");
-        int time = Convert.ToInt32(Console.ReadLine());
-        string result = "";
 
         switch (day)
         {
@@ -48,25 +45,37 @@ public class Program
                 result += "Сейчас " + Day.Суббота; break;
             case "Воскресенье":
                 result += "Сейчас " + Day.Воскресенье; break;
+            default: Console.WriteLine("Ошибка"); System.Environment.Exit(1); break;
         }
 
-        if (time >= 0 && time <= 6)
+        Console.Write("Введите время в часах: ");
+        if (int.TryParse(Console.ReadLine(), out int time))
         {
-            result += ", " + Time.Ночь;
+            if (time >= 0 && time <= 6)
+            {
+                Console.WriteLine(result + ", " + Time.Ночь);
+            }
+            else if (time >= 7 && time <= 12)
+            {
+                Console.WriteLine(result + ", " + Time.Утро);
+            }
+            else if (time >= 13 && time <= 18)
+            {
+                Console.WriteLine(result + ", " + Time.День);
+            }
+            else if (time >= 19 && time <= 23)
+            {
+                Console.WriteLine(result + ", " + Time.Вечер);
+            }
+            else
+            {
+                Console.WriteLine("Ошибка");
+            }
         }
-        if (time >= 7 && time <= 12)
+        else
         {
-            result += ", " + Time.Утро;
+            Console.WriteLine("Ошибка");
+            System.Environment.Exit(1);
         }
-        if (time >= 13 && time <= 18)
-        {
-            result += ", " + Time.День;
-        }
-        if (time >= 19 && time <= 23)
-        {
-            result += ", " + Time.Вечер;
-        }
-
-        Console.WriteLine(result);
     }
 }
